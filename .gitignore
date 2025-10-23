@@ -1,0 +1,42 @@
+# =====================
+# Python
+# =====================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environments
+.venv/
+env/
+venv/
+ENV/
+
+# =====================
+# Editor / IDE
+# =====================
+.vscode/
+.idea/
+*.code-workspace
+
+# =====================
+# macOS / System Files
+# =====================
+.DS_Store
+.Trashes
+*.swp
+Thumbs.db
+
+# =====================
+# Logs / Databases
+# =====================
+*.log
+*.sqlite3
+
+# =====================
+# Environment variables / Secrets
+# =====================
+.env
+.env.local
+secrets.json
