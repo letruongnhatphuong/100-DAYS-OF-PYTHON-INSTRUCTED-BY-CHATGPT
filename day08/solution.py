@@ -1,53 +1,57 @@
 import random
 from hangman_words import word_list
 from hangman_art import stages, logo
-lives = 6
 
+lives = 6
 print(logo)
 
 chosen_word = random.choice(word_list)
-
-placeholder = ""
 word_length = len(chosen_word)
-for position in range(word_length):
-    placeholder += "_"
-print("Word to guess: " + placeholder)
 
+display = "_" * word_length
+guessed_letters = []
 game_over = False
-correct_letters = []
+
+print("Word to guess:", display)
 
 while not game_over:
-
-    print(f"****************************{lives}/6 LIVES LEFT****************************")
+    print(f"\n**************************** {lives}/6 LIVES LEFT ****************************")
     guess = input("Guess a letter: ").lower()
 
-    if guess in correct_letters:
-        print(f"You've already guessed {guess}")
+    # Prevent repeat guesses
+    if guess in guessed_letters:
+        print(f"You've already guessed '{guess}'. Try again!")
+        continue
 
-    display = ""
+    guessed_letters.append(guess)
+    new_display = ""
 
+    # Reveal guessed letters
     for letter in chosen_word:
-        if letter == guess:
-            display += letter
-            correct_letters.append(guess)
-        elif letter in correct_letters:
-            display += letter
+        if letter in guessed_letters:
+            new_display += letter
         else:
-            display += "_"
+            new_display += "_"
 
-    print("Word to guess: " + display)
+    print("Word to guess:", new_display)
 
+    # Wrong guess → lose life
     if guess not in chosen_word:
         lives -= 1
-        print(f"You guessed {guess}, that's not in the word. You lose a life.")
+        print(f"'{guess}' is not in the word. You lose a life.")
 
-        if lives == 0:
-            game_over = True
+    # Update display
+    display = new_display
 
-            print(f"***********************IT WAS {chosen_word}! YOU LOSE**********************")
-
+    # Win condition
     if "_" not in display:
         game_over = True
-        print("****************************YOU WIN****************************")
+        print(f"\n🎉 YOU WIN! The word was '{chosen_word}'. 🎉")
+
+    # Lose condition
+    elif lives == 0:
+        game_over = True
+        print(f"\n💀 YOU LOSE! The word was '{chosen_word}'. 💀")
 
     print(stages[lives])
+    print("Guessed letters:", ", ".join(sorted(guessed_letters)))
